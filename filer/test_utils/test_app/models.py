@@ -12,4 +12,4 @@ class MyModel(models.Model):
 
     general = FilerFileField(related_name='test_file')
     image = FilerImageField(related_name='test_image')
-    folder = FilerFolderField(related_name='test_folder')
+    folder = FilerFolderField(related_name='test_folder', on_delete=models.CASCADE)
