@@ -6,8 +6,8 @@ import hashlib
 import os
 from datetime import datetime
 
+from django import urls
 from django.conf import settings
-from django.core import urlresolvers
 from django.core.files.base import ContentFile
 from django.db import models
 from django.utils import timezone
@@ -248,7 +248,7 @@ class File(PolymorphicModel, mixins.IconsMixin):
         return text
 
     def get_admin_change_url(self):
-        return urlresolvers.reverse(
+        return urls.reverse(
             'admin:{0}_{1}_change'.format(
                 self._meta.app_label,
                 self._meta.model_name,
@@ -263,7 +263,7 @@ class File(PolymorphicModel, mixins.IconsMixin):
         except AttributeError:
             # Django >1.6
             model_name = self._meta.model_name
-        return urlresolvers.reverse(
+        return urls.reverse(
             'admin:{0}_{1}_delete'.format(self._meta.app_label, model_name,),
             args=(self.pk,))
 
@@ -290,11 +290,11 @@ class File(PolymorphicModel, mixins.IconsMixin):
         url = ''
         if self.file and self.is_public:
             try:
-                url = urlresolvers.reverse('canonical', kwargs={
+                url = urls.reverse('canonical', kwargs={
                     'uploaded_at': self.canonical_time,
                     'file_id': self.id
                 })
-            except urlresolvers.NoReverseMatch:
+            except urls.NoReverseMatch:
                 pass  # No canonical url, return empty string
         return url
 

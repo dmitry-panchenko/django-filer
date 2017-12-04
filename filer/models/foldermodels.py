@@ -3,9 +3,9 @@
 from __future__ import absolute_import, unicode_literals
 
 import mptt
+from django import urls
 from django.conf import settings
 from django.contrib.auth import models as auth_models
-from django.core import urlresolvers
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
@@ -198,11 +198,11 @@ class Folder(models.Model, mixins.IconsMixin):
             return self.permission_cache[permission_type]
 
     def get_admin_change_url(self):
-        return urlresolvers.reverse('admin:filer_folder_change',
+        return urls.reverse('admin:filer_folder_change',
                                     args=(self.id,))
 
     def get_admin_directory_listing_url_path(self):
-        return urlresolvers.reverse('admin:filer-directory_listing',
+        return urls.reverse('admin:filer-directory_listing',
                                     args=(self.id,))
 
     def get_admin_delete_url(self):
@@ -212,7 +212,7 @@ class Folder(models.Model, mixins.IconsMixin):
         except AttributeError:
             # Django >1.6
             model_name = self._meta.model_name
-        return urlresolvers.reverse(
+        return urls.reverse(
             'admin:{0}_{1}_delete'.format(self._meta.app_label, model_name,),
             args=(self.pk,))
 
