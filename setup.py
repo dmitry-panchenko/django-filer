@@ -27,7 +27,7 @@ setup(
     packages=find_packages(),
     install_requires=(
         'Django>=1.8,<2.1',  # Django is known to use rc versions
-        'easy-thumbnails>=2,<2.5',
+        'easy-thumbnails>=2,<2.6',
         'django-mptt>=0.6,<0.9',  # the exact version depends on Django
         'django_polymorphic>=0.7,<1.4',
         'Unidecode>=0.04,<0.05',
