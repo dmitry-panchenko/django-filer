@@ -42,6 +42,7 @@ class BaseImage(File):
         to='filer.File',
         related_name='%(app_label)s_%(class)s_file',
         on_delete=models.CASCADE,
+        parent_link=True
     )
 
     @classmethod
