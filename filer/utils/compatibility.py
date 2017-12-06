@@ -80,6 +80,20 @@ except ImportError:
     from django.utils.importlib import import_module  # flake8: noqa
 
 
+def rel(obj):
+    if hasattr(obj, 'rel'):
+        return obj.rel
+
+    return obj.remote_field
+
+
+def rel_to(obj):
+    if hasattr(obj, 'to'):
+        return obj.to
+
+    return obj.model
+
+
 try:
     from PIL import Image as PILImage
     from PIL import ImageDraw as PILImageDraw

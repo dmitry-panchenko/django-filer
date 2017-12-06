@@ -13,7 +13,7 @@ from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
 from ..models import Folder
-from ..utils.compatibility import truncate_words
+from ..utils.compatibility import truncate_words, rel, rel_to
 from ..utils.model_label import get_model_label
 
 
@@ -73,8 +73,8 @@ class AdminFolderWidget(ForeignKeyRawIdWidget):
 
     def obj_for_value(self, value):
         try:
-            key = self.rel.get_related_field().name
-            obj = self.rel.to._default_manager.get(**{key: value})
+            key = rel(self).get_related_field().name
+            obj = rel_to(rel(self))._default_manager.get(**{key: value})
         except:
             obj = None
         return obj
@@ -125,7 +125,7 @@ class FilerFolderField(models.ForeignKey):
         # while letting the caller override them.
         defaults = {
             'form_class': self.default_form_class,
-            'rel': self.rel,
+            'rel': rel(self),
         }
         defaults.update(kwargs)
         return super(FilerFolderField, self).formfield(**defaults)

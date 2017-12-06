@@ -3,6 +3,7 @@ from __future__ import absolute_import
 
 from django.contrib import admin
 
+from filer.utils.compatibility import rel
 from .. import settings
 from ..fields import folder
 
@@ -22,7 +23,7 @@ class PermissionAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         db = kwargs.get('using')
         if db_field.name == 'folder':
-            kwargs['widget'] = folder.AdminFolderWidget(db_field.rel, self.admin_site, using=db)
+            kwargs['widget'] = folder.AdminFolderWidget(rel(db_field), self.admin_site, using=db)
         return super(PermissionAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_model_perms(self, request):
