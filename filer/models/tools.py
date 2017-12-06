@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
-from . import Clipboard
+from . import Clipboard, callable_bool
 
 
 def discard_clipboard(clipboard):
@@ -14,7 +14,7 @@ def delete_clipboard(clipboard):
 
 
 def get_user_clipboard(user):
-    if user.is_authenticated():
+    if callable_bool(user.is_authenticated):
         clipboard = Clipboard.objects.get_or_create(user=user)[0]
         return clipboard
 

@@ -94,6 +94,13 @@ def rel_to(obj):
     return obj.model
 
 
+def callable_bool(obj):
+    if callable(obj):
+        return obj()
+
+    return obj
+
+
 try:
     from PIL import Image as PILImage
     from PIL import ImageDraw as PILImageDraw

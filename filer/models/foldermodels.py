@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from . import mixins
 from .. import settings as filer_settings
-from ..utils.compatibility import python_2_unicode_compatible
+from ..utils.compatibility import python_2_unicode_compatible, callable_bool
 
 
 class FolderManager(models.Manager):
@@ -169,7 +169,7 @@ class Folder(models.Model, mixins.IconsMixin):
         folder. Return the string 'ALL' if the user has all rights.
         """
         user = request.user
-        if not user.is_authenticated():
+        if not callable_bool(user.is_authenticated):
             return False
         elif user.is_superuser:
             return True

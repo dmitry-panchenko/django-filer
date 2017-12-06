@@ -9,7 +9,7 @@ from django.utils import six
 from django.utils.translation import ugettext_lazy as _
 
 from .. import settings as filer_settings
-from ..utils.compatibility import GTE_DJANGO_1_10, PILImage
+from ..utils.compatibility import GTE_DJANGO_1_10, PILImage, callable_bool
 from ..utils.filer_easy_thumbnails import FilerThumbnailer
 from ..utils.pil_exif import get_exif_for_file
 from .filemodels import File
@@ -111,7 +111,7 @@ class BaseImage(File):
         image. Return the string 'ALL' if the user has all rights.
         """
         user = request.user
-        if not user.is_authenticated():
+        if not callable_bool(user.is_authenticated):
             return False
         elif user.is_superuser:
             return True
